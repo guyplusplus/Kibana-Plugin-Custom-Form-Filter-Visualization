@@ -23,7 +23,7 @@ import { Plugin as ExpressionsPublicPlugin } from '../../expressions/public';
 import { VisualizationsSetup } from '../../visualizations/public';
 
 import { customFormFilterAccountsVisDefinition } from './custom_form_filter_accounts_vis';
-import { createCustomFormFilterAccountsVisFn } from './custom_form_filter_accounts_fn';
+//import { createCustomFormFilterAccountsVisFn } from './custom_form_filter_accounts_fn';
 import { ConfigSchema } from '../config';
 
 import './index.scss';

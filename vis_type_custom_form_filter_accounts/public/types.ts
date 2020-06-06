@@ -17,10 +17,6 @@
  * under the License.
  */
 
-export interface Arguments {
-  openLinksInNewTab: boolean;
-}
-
 export interface CustomFormFilterAccountsVisParams {
   filterCounter: number;
   age: number;
