@@ -18,7 +18,7 @@ Few screen shots which makes it very easy to understand.
 
 ![Dashboard](./dashboard.png)
 
-## Creating a dev. environment from scratch on Ubuntu
+## Creating a development environment from scratch on Ubuntu
 
 1. Install curl and JRE
 
@@ -31,6 +31,8 @@ $ sudo apt install openjdk-11-jre-headless
 
 ```
 $ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+$ sudo vi /etc/apt/sources.list.d/elastic.list
+    add line: deb https://artifacts.elastic.co/packages/7.x/apt stable main
 $ sudo apt-get update
 $ sudo apt-get install elasticsearch
 $ sudo apt-get install kibana
@@ -47,7 +49,7 @@ $ sudo apt-get install kibana=7.6.2    [for a specific version]
 
 ```
 $ sudo vi /etc/kibana/kibana.yml
-  server.host: "192.168.1.77" [update with correct value]
+  server.host: "192.168.1.77"    [update with correct value]
 ```
 
 4. Start ElasticSearch then Kibana. Then open browser http://192.168.1.77:5601
