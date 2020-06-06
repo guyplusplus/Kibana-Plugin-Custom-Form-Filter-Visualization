@@ -57,7 +57,6 @@ $ sudo vi /etc/kibana/kibana.yml
 $ sudo systemctl start elasticsearch
 $ curl -X GET "localhost:9200"
 $ sudo systemctl start kibana
-$
 ```
 
 5. Now to create a development environment, download nvm, git client and yarn
@@ -72,7 +71,7 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-6. Download Kibana source code and select the target version
+6. Download Kibana source code and select the target version (v7.6.2, v7.0.0, etc.)
 
 ```
 $ git clone https://github.com/elastic/kibana.git
@@ -90,14 +89,14 @@ $ yarn kbn bootstrap
 $ yarn start --oss
 ```
 
-9. Kernel values for file monitoring may be required
+9. Kernel values adjustment for large number of file monitoring may be required
 
 ```
 $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p
 ```
 
-10. If you have problem to start Kibana dev 7.7.0 with ElasticSearch 7.7.0, add this line in `config/kibana.yml` config file. When upgrading from 7.6 to 7.0 I had to delete all indexes `curl -XDELETE localhost:9200/*`.
+10. If you have problem to start Kibana 7.7.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.7.0, add this line in `config/kibana.yml` config file. When upgrading from 7.6 to 7.7 I had to delete all indexes `curl -XDELETE localhost:9200/*`.
 
 ```
 elasticsearch.ignoreVersionMismatch: true
