@@ -1,0 +1,7 @@
+{
+    "id": "visTypeCustomFormFilterAccounts",
+    "version": "kibana",
+    "ui": true,
+    "server": true,
+    "requiredPlugins": ["expressions", "visualizations"]
+}

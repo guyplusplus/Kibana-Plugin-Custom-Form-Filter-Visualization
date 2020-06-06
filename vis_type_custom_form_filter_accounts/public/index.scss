@@ -1,0 +1,8 @@
+// Prefix all styles with "cffAccount" (custom form filter) to avoid conflicts.
+// Examples
+//   cffAccountChart
+//   cffAccountChart__legend
+//   cffAccountChart__legend--small
+//   cffAccountChart__legend-isLoading
+
+@import './custom_form_filter_accounts_vis';
