@@ -34,16 +34,16 @@ $ sudo apt install openjdk-11-jre-headless
 ```
 $ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 $ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic.list
-$ sudo apt-get update
-$ sudo apt-get install elasticsearch
-$ sudo apt-get install kibana
+$ sudo apt update
+$ sudo apt install elasticsearch
+$ sudo apt install kibana
 ```
 
 For testing purpose, it may be required to install a specific (not latest) version of kibana or ElasticSearch.
 
 ```
-$ sudo apt-get remove kibana    [for latest version]
-$ sudo apt-get install kibana=7.6.2    [for a specific version]
+$ sudo apt remove kibana    [for latest version]
+$ sudo apt install kibana=7.6.2    [for a specific version]
 ```
 
 3. Adjust listening IP address of kibana if network access is required
@@ -66,7 +66,7 @@ $ sudo systemctl start kibana
 ```
 $ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash 
 $ nvm install 10.18.0
-$ sudo apt-get install git
+$ sudo apt install git
 $ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 $ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 $ sudo apt update
