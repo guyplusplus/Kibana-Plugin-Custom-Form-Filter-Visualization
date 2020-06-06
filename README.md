@@ -31,8 +31,7 @@ $ sudo apt install openjdk-11-jre-headless
 
 ```
 $ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-$ sudo vi /etc/apt/sources.list.d/elastic.list
-    add line: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+$ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic.list
 $ sudo apt-get update
 $ sudo apt-get install elasticsearch
 $ sudo apt-get install kibana
