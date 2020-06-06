@@ -6,7 +6,9 @@ This plugin is a demo for the accounts data which can be downloaded from elastic
 
 As plugin architecture is being under heavy redesign in 7.x and documentation is rather obscure, I did my best to create something simple that works.
 
-This repository is for Kibana v7.7 while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for 7.6 legacy architecture.
+This repository is for Kibana v7.7 while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for 7.6.2 legacy architecture.
+
+This plugin is adapted from [vis_type_markdown](https://github.com/elastic/kibana/tree/7.8/src/plugins/vis_type_markdown) plugin.
 
 ## Sample Screenshots
 
