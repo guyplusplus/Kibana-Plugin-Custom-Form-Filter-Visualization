@@ -2,11 +2,11 @@
 
 This project is a simple tutorial for Kibana new comers trying to developer their own vizualisation plugin. The actual usecase is to create a custom form to filter data to help end-users search their data.
 
-This plugin is a demo for the accounts data which can be downloaded from elastic web site [here](https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip).
+This plugin is a demo for the accounts data which can be downloaded from elastic web site [here](https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip) then uploaded via `curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json`.
 
-As plugin architecture is being under heavy redesign in 7.x and document is rather obscure, I did my best to create something simple that works.
+As plugin architecture is being under heavy redesign in 7.x and documentation is rather obscure, I did my best to create something simple that works.
 
-This repository is for 7.7 while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for 7.6 legacy architecture.
+This repository is for Kibana v7.7 while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for 7.6 legacy architecture.
 
 ## Sample Screenshots
 
@@ -27,7 +27,7 @@ $ sudo apt install curl
 $ sudo apt install openjdk-11-jre-headless
 ```
 
-2. Install latest kibana and elasticsearch via apt
+2. Install latest Kibana and ElasticSearch via apt
 
 ```
 $ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
@@ -36,11 +36,11 @@ $ sudo apt-get install elasticsearch
 $ sudo apt-get install kibana
 ```
 
-For testing purpose, it may be required to install a specific (not latest) version of kibana or elasticsearch.
+For testing purpose, it may be required to install a specific (not latest) version of kibana or ElasticSearch.
 
 ```
-$ sudo apt-get remove kibana
-$ sudo apt-get install kibana=7.6.2
+$ sudo apt-get remove kibana    [for latest version]
+$ sudo apt-get install kibana=7.6.2    [for a specific version]
 ```
 
 3. Adjust listening IP address of kibana if network access is required
@@ -55,7 +55,6 @@ $ sudo vi /etc/kibana/kibana.yml
 ```
 $ sudo systemctl start elasticsearch
 $ curl -X GET "localhost:9200"
-...
 $ sudo systemctl start kibana
 $
 ```
@@ -82,20 +81,22 @@ $ git checkout v7.6.2
 
 7. Copy the source code with modified name inside `kibana/plugins`
 
-8. Start in dev. mode, ensuring only OSS (Open Source) is used
+8. Start in development mode, ensuring only OSS (Open Source) is used
 
-nvm use
-yarn kbn bootstrap
-yarn start --oss
+```
+$ nvm use
+$ yarn kbn bootstrap
+$ yarn start --oss
+```
 
 9. Kernel values for file monitoring may be required
 
 ```
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+$ sudo sysctl -p
 ```
 
-10. If you have problem to start Kibana dev 7.7.0 with ElasticSearch 7.7.0, add this line in kibana config file
+10. If you have problem to start Kibana dev 7.7.0 with ElasticSearch 7.7.0, add this line in `config/kibana.yml` config file. When upgrading from 7.6 to 7.0 I had to delete all indexes `curl -XDELETE localhost:9200/*`.
 
 ```
 elasticsearch.ignoreVersionMismatch: true
@@ -106,7 +107,7 @@ elasticsearch.ignoreVersionMismatch: true
 Simply add the plugin directory inside a kibana folder and zip the file. The zip structure is
 
 ```
-my-plugin_7.6.0.zip
+my-plugin_7.7.0.zip
   kibana/
     my-plugin/
       package.json
@@ -117,13 +118,16 @@ my-plugin_7.6.0.zip
         ...
 ```
 
+## Installing the plugin
+
 The plugin can then be installed like this.
 
 ```
-$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/kbn_tp_custom_form_filter_accounts_7.6.0_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/kbn_tp_custom_form_filter_accounts_7.7.0_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy/releases/download/1.0.0/kbn_tp_custom_form_filter_accounts_7.7.0_1.0.0.zip
 ```
 
-Deleting then installing again fails often for me. I fix it by running this command.
+Deleting then installing the plugin often fails for me. I fix it by running this command.
 
 ```
 $ rm -rf /usr/share/kibana/optimize/bundles
