@@ -73,7 +73,7 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-6. Download Kibana source code and select the target version (v7.6.2, v7.0.0, etc.). `kibana` is the top directory.
+6. Download Kibana source code and select the target version (v7.6.2, v7.0.0, etc.). `kibana` is the top directory
 
 ```
 $ git clone https://github.com/elastic/kibana.git
@@ -81,9 +81,9 @@ $ cd kibana
 $ git checkout v7.6.2 
 ```
 
-7. Copy the source code with modified name inside the `kibana/plugins` directory.
+7. Copy the source code with modified name inside the `kibana/plugins` directory
 
-8. Start Kibana in development mode, ensuring only OSS (Open Source) features are used
+8. Start Kibana in development mode, ensuring only OSS (Open Source Software) features are used
 
 ```
 $ cd kibana
@@ -99,17 +99,17 @@ $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p
 ```
 
-10. If you have problem to start Kibana 7.7.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.7.0, add this line in `config/kibana.yml` config file. When upgrading from 7.6 to 7.7 I had to delete all indexes `curl -XDELETE localhost:9200/*`.
+10. If you have problem to start Kibana 7.7.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.7.0, add this line in `config/kibana.yml` config file. When upgrading from 7.6 to 7.7 I had to delete all indexes `curl -XDELETE localhost:9200/*`
 
 ```
 elasticsearch.ignoreVersionMismatch: true
 ```
 
-## Creating the actual form (step 7)
+## Creating the actual form (step 7) for your own usecase
 
-The current plugin name is based on accounts data. Simply perform a search replace in filenames and in the source code, respecting letter capitalization.
+The current plugin name is based on accounts test data. Simply perform a search replace in filenames and in the source code, respecting letter capitalization.
 
-The form itself is contained in the [controller file](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/blob/master/vis_type_custom_form_filter_accounts/public/custom_form_filter_accounts_vis_controller.tsx). An [option tab](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/blob/master/vis_type_custom_form_filter_accounts/public/custom_form_filter_accounts_options.tsx) is also possible.
+The form itself is contained in the [controller file](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/blob/master/vis_type_custom_form_filter_accounts/public/custom_form_filter_accounts_vis_controller.tsx) file. An [option tab](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/blob/master/vis_type_custom_form_filter_accounts/public/custom_form_filter_accounts_options.tsx) is also possible, actually one or more.
 
 The form code looks like this and is very simple to modify, based on EUI React components.
 * [Documentation](https://elastic.github.io/eui/#/)
@@ -132,9 +132,9 @@ The form code looks like this and is very simple to modify, based on EUI React c
 </div>
 ```
 
-## Creating the plugin zip file
+## Packaging the plugin as a zip file
 
-Simply add the plugin directory inside a kibana folder and zip the file. Do not include the `kibana/target` directory. The zip structure is
+Simply add the plugin directory inside a `kibana` folder and zip the file. Do not include the `kibana/target` directory. The zip structure is
 
 ```
 my-plugin_7.7.0.zip
@@ -165,8 +165,10 @@ $ rm -rf /usr/share/kibana/optimize/bundles
 
 ## Project TODO List
 
-- [ ] Create form content (i.e. dropdown, slider) based on actual data
+- [ ] Create form content (i.e. dropdown, slider) with actual data
 - [ ] Create a script to replace 'accounts' in filenames and file content
+- [ ] Add internationalization example
+- [ ] Create test script
 - [ ] Create own plugin icon
 
 
