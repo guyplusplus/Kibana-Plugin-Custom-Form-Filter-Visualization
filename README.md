@@ -107,13 +107,13 @@ elasticsearch.ignoreVersionMismatch: true
 
 ## Creating the actual form (step 7) for your own usecase
 
-The current plugin name is based on accounts test data. Simply perform a search replace in filenames and in the source code, respecting letter capitalization.
+The current plugin name is based on the accounts test data. Simply perform a search replace in filenames and in the source code, respecting letter capitalization.
 
 The form itself is contained in the [controller file](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/blob/master/vis_type_custom_form_filter_accounts/public/custom_form_filter_accounts_vis_controller.tsx) file. An [option tab](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/blob/master/vis_type_custom_form_filter_accounts/public/custom_form_filter_accounts_options.tsx) is also possible, actually one or more.
 
 The form code looks like this and is very simple to modify, based on EUI React components.
-* [Documentation](https://elastic.github.io/eui/#/)
-* [Source Code](https://github.com/elastic/eui)
+* [EUI Documentation](https://elastic.github.io/eui/#/)
+* [EUI GitHub repository](https://github.com/elastic/eui)
 
 ```
 <div>
