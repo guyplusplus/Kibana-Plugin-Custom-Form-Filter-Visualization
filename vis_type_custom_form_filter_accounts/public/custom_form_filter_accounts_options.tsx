@@ -22,7 +22,7 @@ import {
   EuiFieldNumber,
   EuiFormRow
 } from '@elastic/eui';
-import { VisOptionsProps } from 'src/plugins/vis_default_editor/public';
+import { VisOptionsProps } from '../../../src/plugins/vis_default_editor/public';
 import { CustomFormFilterAccountsVisParams } from './types';
 
 
@@ -37,7 +37,7 @@ function CustomFormFilterAccountsOptions({ stateParams, setValue }: VisOptionsPr
     <EuiFormRow label="Maximum Balance">
       <EuiFieldNumber
         value={stateParams.maximumBalance}
-        onChange={({ target: { value } }) => onCustomFormFilterAccountsUpdate(value)}
+        onChange={({ target: { value } }) => onCustomFormFilterAccountsUpdate(Number(value))}
         step={1000}
       />
     </EuiFormRow>

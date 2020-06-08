@@ -17,9 +17,13 @@
  * under the License.
  */
 
+import { TimefilterContract, FilterManager } from '../../../src/plugins/data/public';
+
 export interface CustomFormFilterAccountsVisParams {
   filterCounter: number;
   age: number;
   minimumBalance: number;
   maximumBalance: number;
+  timefilter: TimefilterContract;
+  filterManager: FilterManager;
 }

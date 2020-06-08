@@ -17,14 +17,12 @@
  * under the License.
  */
 
-import { PluginInitializerContext, CoreSetup, CoreStart, Plugin } from '../../../core/public';
-import { Plugin as ExpressionsPublicPlugin } from '../../expressions/public';
-//import { VisualizationsSetup } from '../../../src/plugins/visualizations/public';
-import { VisualizationsSetup } from '../../visualizations/public';
-
-import { customFormFilterAccountsVisDefinition } from './custom_form_filter_accounts_vis';
-//import { createCustomFormFilterAccountsVisFn } from './custom_form_filter_accounts_fn';
+import { PluginInitializerContext, CoreSetup, CoreStart, Plugin } from '../../../src/core/public';
+import { DataPublicPluginSetup, TimefilterContract, FilterManager } from '../../../src/plugins/data/public';
+import { Plugin as ExpressionsPublicPlugin } from '../../../src/plugins/expressions/public';
+import { VisualizationsSetup } from '../../../src/plugins/visualizations/public';
 import { ConfigSchema } from '../config';
+import { getCustomFormFilterAccountsVisDefinition } from './custom_form_filter_accounts_vis';
 
 import './index.scss';
 
@@ -32,18 +30,28 @@ import './index.scss';
 export interface CustomFormFilterAccountsPluginSetupDependencies {
   expressions: ReturnType<ExpressionsPublicPlugin['setup']>;
   visualizations: VisualizationsSetup;
+  data: DataPublicPluginSetup;
+}
+
+export interface CustomFormFilterAccountsVisDependencies extends Partial<CoreStart> {
+  timefilter: TimefilterContract;
+  filterManager: FilterManager;
 }
 
 /** @internal */
-export class CustomFormFilterAccountsPlugin implements Plugin<void, void> {
+export class CustomFormFilterAccountsPlugin implements Plugin<void, CustomFormFilterAccountsPluginSetupDependencies> {
   initializerContext: PluginInitializerContext<ConfigSchema>;
 
   constructor(initializerContext: PluginInitializerContext<ConfigSchema>) {
     this.initializerContext = initializerContext;
   }
 
-  public setup(core: CoreSetup, { expressions, visualizations }: CustomFormFilterAccountsPluginSetupDependencies) {
-    visualizations.createReactVisualization(customFormFilterAccountsVisDefinition);
+  public setup(core: CoreSetup, { expressions, visualizations, data }: CustomFormFilterAccountsPluginSetupDependencies) {
+    const dependencies: CustomFormFilterAccountsVisDependencies = {
+      timefilter: data.query.timefilter.timefilter,
+      filterManager: data.query.filterManager,
+    };
+    visualizations.createReactVisualization(getCustomFormFilterAccountsVisDefinition(dependencies));
     //expressions.registerFunction(createCustomFormFilterAccountsVisFn);
   }
 
@@ -51,3 +59,4 @@ export class CustomFormFilterAccountsPlugin implements Plugin<void, void> {
     // nothing to do here yet
   }
 }
+

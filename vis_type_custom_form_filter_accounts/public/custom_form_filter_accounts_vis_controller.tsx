@@ -17,8 +17,7 @@
  * under the License.
  */
 
-import React, { useState } from 'react';
-
+import React from 'react';
 import {
   EuiButton,
   EuiForm,
@@ -26,68 +25,124 @@ import {
   EuiFieldText,
   EuiSpacer,
 } from '@elastic/eui';
+import { useKibana } from '../../../src/plugins/kibana_react/public';
+import { CustomFormFilterAccountsVisDependencies } from './plugin';
+import { CustomFormFilterAccountsVisParams } from './types';
+import { removeFiltersByControlledBy, stringToInt, stringToFloat } from './filter_helper';
 
-export class CustomFormFilterAccountsVis extends React.Component {
+const filterControlledBy = 'accountsVis';
 
-  constructor(props) {
+interface CustomFormFilterAccountsVisComponentProps extends CustomFormFilterAccountsVisParams {
+  renderComplete: () => {};
+}
+
+/**
+ * The CustomFormFilterAccountsVisComponent renders the form.
+ */
+class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFilterAccountsVisComponentProps> {
+
+  /**
+   * Will be called after the first render when the component is present in the DOM.
+   *
+   * We call renderComplete here, to signal, that we are done with rendering.
+   */
+  componentDidMount() {
+    this.props.renderComplete();
+  }
+
+  /**
+   * Will be called after the component has been updated and the changes has been
+   * flushed into the DOM.
+   *
+   * We will use this to signal that we are done rendering by calling the
+   * renderComplete property.
+   */
+  componentDidUpdate() {
+    this.props.renderComplete();
+  }
+
+  constructor(props: CustomFormFilterAccountsVisComponentProps) {
     super(props);
-    props.visParams.filterCounter = 0;
+    removeFiltersByControlledBy(this.props.filterManager, filterControlledBy);
     this.state = {
       age: "",
       minimumBalance: ""
     };
-    if(props.visParams.age != null && !isNaN(props.visParams.age))
-      this.state.age = String(props.visParams.age);
-    if(props.visParams.minimumBalance != null && !isNaN(props.visParams.minimumBalance))
-      this.state.minimumBalance = String(props.visParams.minimumBalance);
-  }
-
-  /* return null if it is not a number */
-  filterOutNonNumber = (s) => {
-    if(s == null)
-      return null;
-    if(!isFinite(s))
-      return null;
-    return s;
+    if(props.age != null)
+      this.state.age = String(props.age);
+    if(props.minimumBalance != null)
+      this.state.minimumBalance = String(props.minimumBalance);
   }
 
   onClickButtonApplyFilter = () => {
-    this.props.visParams.filterCounter++;
-    this.props.visParams.age = parseInt(this.filterOutNonNumber(this.state.age));
-    this.props.visParams.minimumBalance = parseFloat(this.filterOutNonNumber(this.state.minimumBalance));
-    this.props.vis.updateState();
-    this.props.vis.forceReload();
-  };
+    removeFiltersByControlledBy(this.props.filterManager, filterControlledBy);
+
+    const age = stringToInt(this.state.age);
+    if(age != null) {
+      const ageFilter = {
+        meta: {
+          controlledBy: filterControlledBy,
+          alias: 'Age: ' + age,
+          disabled: false,
+          negate: false,
+        },
+        query: {
+          match_phrase: {
+            age: String(age)
+          }
+        }
+      };
+      this.props.filterManager.addFilters(ageFilter);  
+    }
+
+    const minimumBalance = stringToFloat(this.state.minimumBalance);
+    if(minimumBalance != null) {
+      const minimumBalanceFilter = {
+        meta: {
+          controlledBy: filterControlledBy,
+          alias: 'Min. Bal.: ' + minimumBalance,
+          disabled: false,
+          negate: false,
+        },
+        "range": {
+          "balance": {
+            "gte": minimumBalance,
+            "lt": this.props.maximumBalance,
+          }
+        }
+      };
+      this.props.filterManager.addFilters(minimumBalanceFilter); 
+    }
+  }
 
   onClickButtonDeleteFilter = () => {
-    this.props.visParams.filterCounter = -1;
-    //this.props.setValue('filterCounter', -1);
-    //this.props.vis.updateState();
-    //this.props.vis.forceReload();
-    this.forceUpdate();
+    removeFiltersByControlledBy(this.props.filterManager, filterControlledBy);
   };
 
   onClickButtonClearForm = () => {
-    this.props.visParams.filterCounter = -1;
     this.state.age = "";
     this.state.minimumBalance = "";
-    this.props.vis.updateState();
+    removeFiltersByControlledBy(this.props.filterManager, filterControlledBy);
+    this.forceUpdate();
   };
 
   onFormChange = (event) => {
     const target = event.target;
     const valueStr = target.value;
     const name = target.name;
-    //there is no typing validation in this sample code
+    //there is no validation in this sample code to prevent illegal typing
     this.setState({
       [name]: valueStr
     });
   };
 
+  /**
+   * Render the actual HTML.
+   */
   render() {
-    const minimumBalanceHelpText = `Input accounts minimum balance (Maximum is ${this.props.visParams.maximumBalance})`;
+    const minimumBalanceHelpText = `Input account minimum balance (Maximum is ${this.props.maximumBalance})`;
     return (
-      <div>
+      <div className="cffVis" >
         <EuiForm>
           <EuiFormRow label="Age" helpText="Input customer age">
             <EuiFieldText name="age" onChange={e => this.onFormChange(e)} value={this.state.age} />
@@ -103,12 +158,33 @@ export class CustomFormFilterAccountsVis extends React.Component {
       </div>
     );
   }
+}
 
-  componentDidMount() {
-    this.props.renderComplete();
-  }
+/**
+ * This is a wrapper component, that is actually used as the visualization.
+ * The sole purpose of this component is to extract all required parameters from
+ * the properties and pass them down as separate properties to the actual component.
+ * That way the actual (CustomFormFilterAccountsVisComponent) will properly trigger it's prop update
+ * callback (componentWillReceiveProps) if one of these params change. It wouldn't
+ * trigger otherwise (e.g. it doesn't for this wrapper), since it only triggers
+ * if the reference to the prop changes (in this case the reference to vis).
+ *
+ * The way React works, this wrapper nearly brings no overhead, but allows us
+ * to use proper lifecycle methods in the actual component.
+ */
+import { CustomFormFilterAccountsVisComponentProp } from './custom_form_filter_accounts_vis';
 
-  componentDidUpdate() {
-    this.props.renderComplete();
-  }
+export function CustomFormFilterAccountsVisWrapper(props: CustomFormFilterAccountsVisComponentProp) {
+  const kibana = useKibana<CustomFormFilterAccountsVisDependencies>();
+  return (
+    <CustomFormFilterAccountsVisComponent
+      filterCounter={props.visParams.filterCounter}
+      age={props.visParams.age}
+      minimumBalance={props.visParams.minimumBalance}
+      maximumBalance={props.visParams.maximumBalance}
+      renderComplete={props.renderComplete}
+      timefilter={kibana.services.timefilter}
+      filterManager={kibana.services.filterManager}
+    />
+  );
 }

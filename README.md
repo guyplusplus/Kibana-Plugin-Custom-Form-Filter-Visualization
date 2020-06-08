@@ -1,10 +1,10 @@
 # Kibana Plugin - Custom Form Filter Visualization 
 
-This project is a simple tutorial for Kibana new comers trying to developer their own vizualisation plugin. The actual usecase is to create a custom form to filter data to help end-users search their data.
+This project is a simple tutorial for Kibana new comers trying to developer their own vizualisation plugin. The actual usecase of this plugin is to create a custom form to filter data and tailor dashboard output.
 
 This plugin is a demo for the accounts data which can be downloaded from elastic web site [here](https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip) then uploaded via `curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json`.
 
-As plugin architecture is being under heavy redesign in 7.x and documentation is rather obscure, I did my best to create something simple that works.
+As plugin architecture is being under heavy redesign in 7.x and documentation is rather obscure, I did my best to create something simple that works. The code is also basic, I am JavaScript beginner!
 
 This repository is for Kibana v7.7 while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for 7.6.2 legacy architecture.
 
@@ -132,9 +132,11 @@ The form code looks like this and is very simple to modify, based on EUI React c
 </div>
 ```
 
+I use [Microsoft Code](https://code.visualstudio.com/) to edit code and [Google Chrome](https://www.google.com/chrome/) to debug.
+
 ## Packaging the plugin as a zip file
 
-Simply add the plugin directory inside a `kibana` folder and zip the file. Do not include the `kibana/target` directory. The zip structure is
+Simply add the plugin directory inside a `kibana` folder and zip the file. Do not include the `my-plugin/target` directory in the zip file. The zip structure is
 
 ```
 my-plugin_7.7.0.zip
@@ -153,8 +155,8 @@ my-plugin_7.7.0.zip
 The plugin can then be installed like this for an apt installed Kibana.
 
 ```
-$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/kbn_tp_custom_form_filter_accounts_7.7.0_1.0.0.zip
-$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/kbn_tp_custom_form_filter_accounts_7.7.0_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.7.0_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.7.0_1.0.0.zip
 ```
 
 Deleting then installing the plugin often fails for me. I fix it by running this command.
