@@ -53,7 +53,7 @@ $ sudo vi /etc/kibana/kibana.yml
   server.host: "192.168.1.77"    [update with correct value]
 ```
 
-4. Start ElasticSearch then Kibana. Then open browser http://192.168.1.77:5601
+4. Start ElasticSearch then Kibana. Then open browser http://192.168.1.77:5601    [update with correct value]
 
 ```
 $ sudo systemctl start elasticsearch
@@ -73,7 +73,7 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-6. Download Kibana source code and select the target version (v7.6.2, v7.0.0, etc.). `kibana` is the top directory
+6. Download Kibana source code and select the target version (v7.6.2, v7.7.1, etc.). `kibana` is the top directory
 
 ```
 $ git clone https://github.com/elastic/kibana.git
@@ -99,7 +99,7 @@ $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p
 ```
 
-10. If you have problem to start Kibana 7.7.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.7.0, add this line in `config/kibana.yml` config file. When upgrading from 7.6 to 7.7 I had to delete all indexes `curl -XDELETE localhost:9200/*`
+10. If you have problem to start Kibana 7.7.1 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.7.1 with the error message `[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.7.1 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. When upgrading from 7.6.2 to 7.7.1 I had to delete all indexes `curl -XDELETE localhost:9200/*`
 
 ```
 elasticsearch.ignoreVersionMismatch: true
@@ -136,12 +136,16 @@ I use [Microsoft Code](https://code.visualstudio.com/) to edit code and [Google 
 
 ## Packaging the plugin as a zip file
 
-Simply add the plugin directory inside a `kibana` folder and zip the file. Do not include the `my-plugin/target` directory in the zip file. The zip structure is
+Simply add the plugin directory inside a `kibana` folder and zip the file. Filename format carries the Kibana version (i.e. 7.7.1) followed by the plugin version (i.e. 1.0.0). Do not include the `vis_type_custom_form_filter_accounts/target` directory in the zip file.
+
+To change the Kibana version, just change the file `kbn_tp_custom_form_filter_accounts/package.json`, value `kibana.version`.
+
+The zip structure is
 
 ```
-my-plugin_7.7.0.zip
+vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
   kibana/
-    my-plugin/
+    vis_type_custom_form_filter_accounts/
       package.json
       config.js
       public/
@@ -155,14 +159,18 @@ my-plugin_7.7.0.zip
 The plugin can then be installed like this for an apt installed Kibana.
 
 ```
-$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.7.0_1.0.0.zip
-$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.7.0_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
 ```
 
 Deleting then installing the plugin often fails for me. I fix it by running this command.
 
 ```
-$ rm -rf /usr/share/kibana/optimize/bundles
+$ sudo ./bin/kibana-plugin --allow-root remove vis_type_custom_form_filter_accounts
+Removing vis_type_custom_form_filter_accounts...
+Plugin removal complete
+$ sudo rm -rf /usr/share/kibana/optimize/bundles
+$
 ```
 
 ## Project TODO List
