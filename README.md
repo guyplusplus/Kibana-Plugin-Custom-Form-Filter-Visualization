@@ -6,7 +6,7 @@ This plugin is a demo for the accounts data which can be downloaded from elastic
 
 As plugin architecture is being under heavy redesign in 7.x and documentation is rather obscure, I did my best to create something simple that works. The code is also basic, I am JavaScript beginner!
 
-This repository is for Kibana v7.7 while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for 7.6.2 legacy architecture.
+This repository is for Kibana *coming soon* **v7.8 'modern architecture'** while [this repository](https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization-Legacy) is for **v7.6.2 'legacy' architecture**.
 
 This plugin is adapted from [vis_type_markdown](https://github.com/elastic/kibana/tree/7.8/src/plugins/vis_type_markdown) plugin.
 
@@ -43,7 +43,7 @@ For testing purpose, it may be required to install a specific (not latest) versi
 
 ```
 $ sudo apt remove kibana    [for latest version]
-$ sudo apt install kibana=7.6.2    [for a specific version]
+$ sudo apt install kibana=7.8.0    [for a specific version]
 ```
 
 3. Adjust listening IP address of kibana if network access is required
@@ -73,12 +73,12 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-6. Download Kibana source code and select the target version (v7.6.2, v7.7.1, etc.). `kibana` is the top directory
+6. Download Kibana source code and select the target version (v7.6.2, v7.8.0, etc.). `kibana` is the top directory
 
 ```
 $ git clone https://github.com/elastic/kibana.git
 $ cd kibana
-$ git checkout v7.6.2 
+$ git checkout v7.8
 ```
 
 7. Copy the source code with modified name inside the `kibana/plugins` directory
@@ -99,7 +99,7 @@ $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p
 ```
 
-10. If you have problem to start Kibana 7.7.1 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.7.1 with the error message `[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.7.1 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. When upgrading from 7.6.2 to 7.7.1 I had to delete all indexes `curl -XDELETE localhost:9200/*`
+10. If you have problem to start Kibana 7.8.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.8.0 with the error message `[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.8.0 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. When upgrading from 7.6.2 to 7.8.0 I had to delete all indexes `curl -XDELETE localhost:9200/*`
 
 ```
 elasticsearch.ignoreVersionMismatch: true
@@ -136,14 +136,14 @@ I use [Microsoft Code](https://code.visualstudio.com/) to edit code and [Google 
 
 ## Packaging the plugin as a zip file
 
-Simply add the plugin directory inside a `kibana` folder and zip the file. Filename format carries the Kibana version (i.e. 7.7.1) followed by the plugin version (i.e. 1.0.0). Do not include the `vis_type_custom_form_filter_accounts/target` directory in the zip file.
+Simply add the plugin directory inside a `kibana` folder and zip the file. Filename format carries the Kibana version (i.e. 7.8.0) followed by the plugin version (i.e. 1.0.0). Do not include the `vis_type_custom_form_filter_accounts/target` directory in the zip file.
 
 To change the Kibana version, just change the file `kbn_tp_custom_form_filter_accounts/package.json`, value `kibana.version`.
 
 The zip structure is
 
 ```
-vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
+vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
   kibana/
     vis_type_custom_form_filter_accounts/
       package.json
@@ -159,8 +159,8 @@ vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
 The plugin can then be installed like this for an apt installed Kibana.
 
 ```
-$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
-$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.7.1_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
+$ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
 ```
 
 Deleting then installing the plugin often fails for me. I fix it by running this command.
