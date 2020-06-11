@@ -64,8 +64,8 @@ $ sudo systemctl start kibana
 5. Now to create a development environment, download nvm, git client and yarn
 
 ```
-$ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash 
-$ nvm install 10.18.0
+$ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash    [then open new terminal]
+$ nvm install 10.21.0
 $ sudo apt install git
 $ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 $ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
