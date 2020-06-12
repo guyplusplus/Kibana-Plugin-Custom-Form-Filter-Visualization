@@ -102,7 +102,7 @@ $ sudo sysctl -p
 
 10. If you have problem to start Kibana 7.8.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.8.0 with the error message `[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.8.0 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. When upgrading from 7.6.2 to 7.8.0 I had to delete all indexes `curl -XDELETE localhost:9200/*`
 
-```shell
+```
 elasticsearch.ignoreVersionMismatch: true
 ```
 
@@ -116,7 +116,7 @@ The form code looks like this and is very simple to modify, based on EUI React c
 * [EUI Documentation](https://elastic.github.io/eui/#/)
 * [EUI GitHub repository](https://github.com/elastic/eui)
 
-```
+```xml
 <div>
   <EuiForm>
     <EuiFormRow label="Age" helpText="Input customer age">
