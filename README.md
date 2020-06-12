@@ -1,8 +1,8 @@
 # Kibana Plugin - Custom Form Filter Visualization 
 
-This project is a simple tutorial for Kibana new comers trying to developer their own vizualisation plugin. The actual usecase of this plugin is to create a custom form to filter data and tailor dashboard output.
+This project is a simple tutorial for Kibana new comers trying to develop their own vizualisation plugin. The actual usecase of this plugin is to create a custom form to filter data and tailor dashboard output.
 
-This plugin is a demo for the accounts data which can be downloaded from elastic web site [here](https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip) then uploaded via `curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json`.
+This plugin is a demo for the accounts data which can be downloaded from elastic web site [here](https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip).
 
 As plugin architecture is being under heavy redesign in 7.x and documentation is rather obscure, I did my best to create something simple that works. The code is also basic, I am JavaScript beginner!
 
@@ -31,7 +31,7 @@ $ sudo apt install openjdk-11-jre-headless
 
 2. Install latest Kibana and ElasticSearch via apt
 
-```
+```shell
 $ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 $ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic.list
 $ sudo apt update
@@ -50,21 +50,22 @@ $ sudo apt install kibana=7.8.0    [for a specific version]
 
 ```
 $ sudo vi /etc/kibana/kibana.yml
-  server.host: "192.168.1.77"    [update with correct value]
+  server.host: "192.168.1.77"    [update with correct IP value]
 ```
 
-4. Start ElasticSearch then Kibana. Then open browser http://192.168.1.77:5601    [update with correct value]
+4. Start ElasticSearch, possibly upload the accounts test data, then start Kibana. Then open browser http://192.168.1.77:5601    [update with correct IP value]
 
 ```
 $ sudo systemctl start elasticsearch
 $ curl -X GET "localhost:9200"
+$ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json    [optional]
 $ sudo systemctl start kibana
 ```
 
 5. Now to create a development environment, download nvm, git client and yarn
 
 ```
-$ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash    [then open new terminal]
+$ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash    [then open a new terminal]
 $ nvm install 10.21.0
 $ sudo apt install git
 $ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -73,12 +74,12 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-6. Download Kibana source code and select the target version (v7.6.2, v7.8.0, etc.). `kibana` is the top directory
+6. Download Kibana source code. . After download, `kibana` is the top directory. Then select the target version by selecting a tag or a branch (v7.6.2, v7.8.0, v7.8, etc.)
 
 ```
 $ git clone https://github.com/elastic/kibana.git
 $ cd kibana
-$ git checkout v7.8
+$ git checkout v7.8.0
 ```
 
 7. Copy the source code with modified name inside the `kibana/plugins` directory
