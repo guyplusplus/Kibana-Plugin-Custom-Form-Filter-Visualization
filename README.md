@@ -100,7 +100,7 @@ $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p
 ```
 
-10. If you have problem to start Kibana 7.8.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.8.0 with the error message `[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.8.0 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. When upgrading from 7.6.2 to 7.8.0 I had to delete all indexes `curl -XDELETE localhost:9200/*`
+10. If you have a problem to start a higher version of Kibana than ElasticSearch, with the error message during development`[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.8.0 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. As a side note when upgrading from v7.6.2 to v7.8 branch I had to delete all indexes `curl -XDELETE localhost:9200/*`
 
 ```
 elasticsearch.ignoreVersionMismatch: true
