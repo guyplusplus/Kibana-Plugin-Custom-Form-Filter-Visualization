@@ -24,7 +24,7 @@ Few screen shots which makes it very easy to understand.
 
 1. Install curl and JRE
 
-```
+```shell
 $ sudo apt install curl
 $ sudo apt install openjdk-11-jre-headless
 ```
@@ -41,21 +41,21 @@ $ sudo apt install kibana
 
 For testing purpose, it may be required to install a specific (not latest) version of kibana or ElasticSearch.
 
-```
+```shell
 $ sudo apt remove kibana    [for latest version]
 $ sudo apt install kibana=7.8.0    [for a specific version]
 ```
 
 3. Adjust listening IP address of kibana if network access is required
 
-```
+```shell
 $ sudo vi /etc/kibana/kibana.yml
   server.host: "192.168.1.77"    [update with correct IP value]
 ```
 
 4. Start ElasticSearch, possibly upload the accounts test data, then start Kibana. Then open browser http://192.168.1.77:5601    [update with correct IP value]
 
-```
+```shell
 $ sudo systemctl start elasticsearch
 $ curl -X GET "localhost:9200"
 $ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json    [optional]
@@ -64,7 +64,7 @@ $ sudo systemctl start kibana
 
 5. Now to create a development environment, download nvm, git client and yarn
 
-```
+```shell
 $ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash    [then open a new terminal]
 $ nvm install 10.21.0
 $ sudo apt install git
@@ -76,7 +76,7 @@ $ sudo apt install yarn
 
 6. Download Kibana source code. . After download, `kibana` is the top directory. Then select the target version by selecting a tag or a branch (v7.6.2, v7.8.0, v7.8, etc.)
 
-```
+```shell
 $ git clone https://github.com/elastic/kibana.git
 $ cd kibana
 $ git checkout v7.8.0
@@ -86,7 +86,7 @@ $ git checkout v7.8.0
 
 8. Start Kibana in development mode, ensuring only OSS (Open Source Software) features are used
 
-```
+```shell
 $ cd kibana
 $ nvm use
 $ yarn kbn bootstrap
@@ -95,14 +95,14 @@ $ yarn start --oss
 
 9. Kernel values adjustment for large number of file monitoring may be required
 
-```
+```shell
 $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p
 ```
 
 10. If you have problem to start Kibana 7.8.0 (from Git. For some reason it thinks it is already in version 8.0.0) with ElasticSearch 7.8.0 with the error message `[error][savedobjects-service] This version of Kibana (v8.0.0) is incompatible with the following Elasticsearch nodes in your cluster: v7.8.0 @ 127.0.0.1:9200 (127.0.0.1)`, add this line in `config/kibana.yml` config file. When upgrading from 7.6.2 to 7.8.0 I had to delete all indexes `curl -XDELETE localhost:9200/*`
 
-```
+```shell
 elasticsearch.ignoreVersionMismatch: true
 ```
 
@@ -159,14 +159,14 @@ vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
 
 The plugin can then be installed like this for an apt installed Kibana.
 
-```
+```shell
 $ sudo ./bin/kibana-plugin --allow-root install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
 $ sudo ./bin/kibana-plugin --allow-root install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
 ```
 
 Deleting then installing the plugin often fails for me. I fix it by running this command.
 
-```
+```shell
 $ sudo ./bin/kibana-plugin --allow-root remove vis_type_custom_form_filter_accounts
 Removing vis_type_custom_form_filter_accounts...
 Plugin removal complete
