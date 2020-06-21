@@ -2,7 +2,7 @@
   "name": "vis_type_custom_form_filter_accounts",
   "version": "1.0.0",
   "kibana": {
-    "version": "8.0.0",
+    "version": "kibana",
     "templateVersion": "1.0.0"
   },
   "license": "Apache-2.0"

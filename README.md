@@ -139,7 +139,9 @@ I use [Microsoft Code](https://code.visualstudio.com/) to edit code and [Google 
 
 Simply add the plugin directory inside a `kibana` folder and zip the file. Filename format carries the Kibana version (i.e. 7.8.0) followed by the plugin version (i.e. 1.0.0). Do not include the `vis_type_custom_form_filter_accounts/target` directory in the zip file.
 
-To change the Kibana version, just change the file `kbn_tp_custom_form_filter_accounts/package.json`, value `kibana.version`.
+First setup the Kibana version by updating the files:
+* `kbn_tp_custom_form_filter_accounts/package.json`, value `kibana.version`
+* `kbn_tp_custom_form_filter_accounts/kibana.json`, value `version`
 
 The zip structure is
 
@@ -147,8 +149,9 @@ The zip structure is
 vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
   kibana/
     vis_type_custom_form_filter_accounts/
-      package.json
       config.js
+      kibana.json
+      package.json
       public/
         ...
       server/
@@ -177,6 +180,7 @@ $
 ## Project TODO List
 
 - [ ] Create form content (i.e. dropdown, slider) with actual data
+- [ ] Sample code to modify time filter
 - [ ] Create a script to replace 'accounts' in filenames and file content
 - [ ] Add internationalization example
 - [ ] Create test script
