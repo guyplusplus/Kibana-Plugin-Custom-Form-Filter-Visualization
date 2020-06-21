@@ -167,7 +167,7 @@ The plugin can then be installed like this for an apt-get installed Kibana.
 ```shell
 $ cd /usr/share/kibana
 $ sudo -u kibana ./bin/kibana-plugin install file:///home/john/downloads/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
-$ sudo -u kibana ./bin/kibana-plugin install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/1.0.0/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
+$ sudo -u kibana ./bin/kibana-plugin install https://github.com/guyplusplus/Kibana-Plugin-Custom-Form-Filter-Visualization/releases/download/7.8.0-1.0.0/vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
 ```
 
 Deleting then installing the plugin often fails for me. I fix it by running this command.
