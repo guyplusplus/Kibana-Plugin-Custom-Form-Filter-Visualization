@@ -106,6 +106,15 @@ $ sudo sysctl -p
 elasticsearch.ignoreVersionMismatch: true
 ```
 
+11. When it is time to upgrade the kibana development environment, start for a clean environment, get the latest changes from github, and switch to the new tag or release. The `kibana/plugins` directory remains untouched accross these steps. You may delete the `target` folder in each plugin folder.
+
+```shell
+$ cd kibana
+$ git reset --hard
+$ git fetch
+$ git checkout v7.8.1
+```
+
 ## Creating the actual form (step 7) for your own usecase
 
 The current plugin name is based on the accounts test data. Simply perform a search replace in filenames and in the source code, respecting letter capitalization.
