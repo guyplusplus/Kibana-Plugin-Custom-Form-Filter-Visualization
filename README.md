@@ -88,7 +88,7 @@ $ git checkout v7.8.0
 
 ```shell
 $ cd kibana
-$ nvm use
+$ nvm use 10.21.0    [or expected version]
 $ yarn kbn bootstrap
 $ yarn start --oss
 ```
@@ -171,7 +171,7 @@ vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
 
 ## Installing the plugin
 
-The plugin can then be installed like this for an apt-get installed Kibana.
+The plugin can then be installed like this for an apt installed Kibana.
 
 ```shell
 $ cd /usr/share/kibana
@@ -193,7 +193,7 @@ $
 ## Project TODO List
 
 - [ ] Create form content (i.e. dropdown, slider) with actual data
-- [ ] Sample code to modify time filter
+- [X] Sample code to modify time filter
 - [ ] Create a script to replace 'accounts' in filenames and file content
 - [ ] Add internationalization example
 - [ ] Create test script

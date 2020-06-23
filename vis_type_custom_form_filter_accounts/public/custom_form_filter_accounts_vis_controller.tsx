@@ -126,6 +126,12 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
     this.forceUpdate();
   };
 
+  onClickButtonToday = () => {
+    this.props.timefilter.setTime(
+      {from: 'now/d', to: 'now/d'}
+    );
+  };
+  
   onFormChange = (event) => {
     const target = event.target;
     const valueStr = target.value;
@@ -153,7 +159,8 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
           <EuiSpacer />
           <EuiButton onClick={this.onClickButtonApplyFilter} fill>Apply filter</EuiButton>&nbsp;
           <EuiButton onClick={this.onClickButtonDeleteFilter} >Delete filter</EuiButton>&nbsp;
-          <EuiButton onClick={this.onClickButtonClearForm} >Clear form</EuiButton>
+          <EuiButton onClick={this.onClickButtonClearForm} >Clear form</EuiButton>&nbsp;
+          <EuiButton onClick={this.onClickButtonToday} color="secondary">Time: today</EuiButton>
         </EuiForm>
       </div>
     );
