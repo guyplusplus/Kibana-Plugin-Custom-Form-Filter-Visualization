@@ -25,6 +25,7 @@ import { ExprVis, VisParams } from '../../../src/plugins/visualizations/public';
 import { CustomFormFilterAccountsVisWrapper } from './custom_form_filter_accounts_vis_controller';
 import { CustomFormFilterAccountsOptions } from './custom_form_filter_accounts_options';
 import { CustomFormFilterAccountsVisDependencies } from './plugin';
+import { icon } from './custom_form_filter_icon';
 
 export interface CustomFormFilterAccountsVisComponentProp {
   vis: ExprVis;
@@ -38,7 +39,7 @@ export function getCustomFormFilterAccountsVisDefinition(dependencies: CustomFor
     name: 'customFormFilterAccounts',
     title: 'Form - Accounts',
     isAccessible: true,
-    icon: 'visText',
+    icon: icon,
     description: 'This sample custom visualization plugin contains a simple UI to adjust filter for accounts test data',
     visConfig: {
       defaults: {
