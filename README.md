@@ -197,6 +197,6 @@ $
 - [ ] Create a script to replace 'accounts' in filenames and file content
 - [ ] Add internationalization example
 - [ ] Create test script
-- [ ] Create own plugin icon
+- [X] Create own plugin icon
 
 
