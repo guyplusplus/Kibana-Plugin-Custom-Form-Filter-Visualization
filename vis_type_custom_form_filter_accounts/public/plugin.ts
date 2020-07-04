@@ -34,6 +34,7 @@ export interface CustomFormFilterAccountsPluginSetupDependencies {
 }
 
 export interface CustomFormFilterAccountsVisDependencies extends Partial<CoreStart> {
+  coreSetup: CoreSetup;
   timefilter: TimefilterContract;
   filterManager: FilterManager;
 }
@@ -46,10 +47,11 @@ export class CustomFormFilterAccountsPlugin implements Plugin<void, CustomFormFi
     this.initializerContext = initializerContext;
   }
 
-  public setup(core: CoreSetup, { expressions, visualizations, data }: CustomFormFilterAccountsPluginSetupDependencies) {
+  public setup(coreSetup: CoreSetup, { expressions, visualizations, data }: CustomFormFilterAccountsPluginSetupDependencies) {
     const dependencies: CustomFormFilterAccountsVisDependencies = {
       timefilter: data.query.timefilter.timefilter,
       filterManager: data.query.filterManager,
+      coreSetup: coreSetup,
     };
     visualizations.createReactVisualization(getCustomFormFilterAccountsVisDefinition(dependencies));
     //expressions.registerFunction(createCustomFormFilterAccountsVisFn);

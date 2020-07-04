@@ -18,6 +18,7 @@
  */
 
 import { TimefilterContract, FilterManager } from '../../../src/plugins/data/public';
+import { CoreSetup } from '../../../src/core/public';
 
 export interface CustomFormFilterAccountsVisParams {
   filterCounter: number;
@@ -26,4 +27,5 @@ export interface CustomFormFilterAccountsVisParams {
   maximumBalance: number;
   timefilter: TimefilterContract;
   filterManager: FilterManager;
+  coreSetup: CoreSetup;
 }

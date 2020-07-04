@@ -24,11 +24,13 @@ import {
   EuiFormRow,
   EuiFieldText,
   EuiSpacer,
+  EuiComboBox,
 } from '@elastic/eui';
 import { useKibana } from '../../../src/plugins/kibana_react/public';
 import { CustomFormFilterAccountsVisDependencies } from './plugin';
 import { CustomFormFilterAccountsVisParams } from './types';
 import { removeFiltersByControlledBy, stringToInt, stringToFloat } from './filter_helper';
+import { fetchData } from './fetch_data';
 
 const filterControlledBy = 'accountsVis';
 
@@ -36,10 +38,21 @@ interface CustomFormFilterAccountsVisComponentProps extends CustomFormFilterAcco
   renderComplete: () => {};
 }
 
+interface AccountFormState {
+  age: string,
+  minimumBalance: string,
+  countryStates: any,
+  countryStateSelected: any
+}
+
 /**
  * The CustomFormFilterAccountsVisComponent renders the form.
  */
 class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFilterAccountsVisComponentProps> {
+
+  asyncInitStated : boolean = false;
+  isLoading : boolean = true;
+  state : AccountFormState;
 
   /**
    * Will be called after the first render when the component is present in the DOM.
@@ -63,15 +76,44 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
 
   constructor(props: CustomFormFilterAccountsVisComponentProps) {
     super(props);
+
     removeFiltersByControlledBy(this.props.filterManager, filterControlledBy);
+    const initialCountryStates = [{label: '-- All --', value: 0}];
     this.state = {
       age: "",
-      minimumBalance: ""
+      minimumBalance: "",
+      countryStates: initialCountryStates,
+      countryStateSelected: [initialCountryStates[0]],
     };
     if(props.age != null)
       this.state.age = String(props.age);
     if(props.minimumBalance != null)
       this.state.minimumBalance = String(props.minimumBalance);
+  }
+
+  async initControls() {
+    if(this.asyncInitStated)
+      return;
+    this.asyncInitStated = true;
+    let statesArray = null;
+    try {
+      statesArray = await fetchData(this.props.coreSetup, "bank*", "state.keyword");
+      statesArray.sort();
+    }
+    catch(error) {
+      statesArray = null;
+    }
+    if(!statesArray)
+      statesArray = [];
+    statesArray.unshift('-- All --');
+    let countryStates = [];
+    for(let i = 0; i<statesArray.length; i++) {
+      countryStates.push({label: statesArray[i], value: i});
+    }
+    this.isLoading = false;
+    this.setState({
+      ["countryStates"]: countryStates
+    });
   }
 
   onClickButtonApplyFilter = () => {
@@ -113,6 +155,23 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
       };
       this.props.filterManager.addFilters(minimumBalanceFilter); 
     }
+
+    if(this.state.countryStateSelected[0].value != 0) {
+      const stateFilter = {
+        meta: {
+          controlledBy: filterControlledBy,
+          alias: 'State: ' + this.state.countryStateSelected[0].label,
+          disabled: false,
+          negate: false,
+        },
+        query: {
+          match_phrase: {
+            state: this.state.countryStateSelected[0].label
+          }
+        }
+      };
+      this.props.filterManager.addFilters(stateFilter);  
+    }
   }
 
   onClickButtonDeleteFilter = () => {
@@ -122,6 +181,7 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
   onClickButtonClearForm = () => {
     this.state.age = "";
     this.state.minimumBalance = "";
+    this.state.countryStateSelected = [this.state.countryStates[0]];
     removeFiltersByControlledBy(this.props.filterManager, filterControlledBy);
     this.forceUpdate();
   };
@@ -142,10 +202,17 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
     });
   };
 
+  onCountryStateChange = selectedOptions => {
+    this.setState({
+      ["countryStateSelected"]: selectedOptions
+    });
+  };
+
   /**
    * Render the actual HTML.
    */
   render() {
+    this.initControls();
     const minimumBalanceHelpText = `Input account minimum balance (Maximum is ${this.props.maximumBalance})`;
     return (
       <div className="cffVis" >
@@ -156,6 +223,16 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
           <EuiFormRow label="Minimum balance" helpText={minimumBalanceHelpText} >
             <EuiFieldText name="minimumBalance" onChange={e => this.onFormChange(e)} value={this.state.minimumBalance} />
           </EuiFormRow>
+          <EuiSpacer />
+          <EuiComboBox
+            placeholder="Select a state"
+            isLoading={this.isLoading}
+            singleSelection={{ asPlainText: true }}
+            options={this.state.countryStates}
+            selectedOptions={this.state.countryStateSelected}
+            onChange={this.onCountryStateChange}
+            isClearable={false}
+          />
           <EuiSpacer />
           <EuiButton onClick={this.onClickButtonApplyFilter} fill>Apply filter</EuiButton>&nbsp;
           <EuiButton onClick={this.onClickButtonDeleteFilter} >Delete filter</EuiButton>&nbsp;
@@ -192,6 +269,7 @@ export function CustomFormFilterAccountsVisWrapper(props: CustomFormFilterAccoun
       renderComplete={props.renderComplete}
       timefilter={kibana.services.timefilter}
       filterManager={kibana.services.filterManager}
+      coreSetup={kibana.services.coreSetup}
     />
   );
 }
