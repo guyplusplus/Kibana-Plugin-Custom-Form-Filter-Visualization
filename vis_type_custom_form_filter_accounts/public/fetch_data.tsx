@@ -1,3 +1,13 @@
+/*
+
+Source code based on:
+
+https://github.com/elastic/kibana/blob/v7.8.0/src/plugins/input_control_vis/public/control/list_control_factory.ts
+https://github.com/elastic/kibana/blob/v7.8.0/src/plugins/input_control_vis/public/control/create_search_source.ts
+
+*/
+
+
 import {
   IFieldType,
   TimefilterContract,
