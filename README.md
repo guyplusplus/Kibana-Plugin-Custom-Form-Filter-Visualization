@@ -192,7 +192,7 @@ $
 
 ## Project TODO List
 
-- [ ] Create form content (i.e. dropdown, slider) with actual data
+- [X] Create form content (i.e. dropdown, slider) with actual data
 - [X] Sample code to modify time filter
 - [ ] Create a script to replace 'accounts' in filenames and file content
 - [ ] Add internationalization example
