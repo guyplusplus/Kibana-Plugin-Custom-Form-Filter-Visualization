@@ -126,20 +126,30 @@ The form code looks like this and is very simple to modify, based on EUI React c
 * [EUI GitHub repository](https://github.com/elastic/eui)
 
 ```xml
-<div>
-  <EuiForm>
-    <EuiFormRow label="Age" helpText="Input customer age">
-      <EuiFieldText name="age" onChange={e => this.onFormChange(e)} value={this.state.age} />
-    </EuiFormRow>
-    <EuiFormRow label="Minimum balance" helpText={minimumBalanceHelpText} >
-      <EuiFieldText name="minimumBalance" onChange={e => this.onFormChange(e)} value={this.state.minimumBalance} />
-    </EuiFormRow>
-    <EuiSpacer />
-    <EuiButton onClick={this.onClickButtonApplyFilter} fill>Apply filter</EuiButton>&nbsp;
-    <EuiButton onClick={this.onClickButtonDeleteFilter} >Delete filter</EuiButton>&nbsp;
-    <EuiButton onClick={this.onClickButtonClearForm} >Clear form</EuiButton>
-  </EuiForm>
-</div>
+<EuiForm>
+  <EuiFormRow label="Age" helpText="Input customer age">
+    <EuiFieldText name="age" onChange={e => this.onFormChange(e)} value={this.state.age} />
+  </EuiFormRow>
+  <EuiFormRow label="Minimum balance" helpText={minimumBalanceHelpText} >
+    <EuiFieldText name="minimumBalance" onChange={e => this.onFormChange(e)} value={this.state.minimumBalance} />
+  </EuiFormRow>
+  <EuiSpacer />
+  <EuiText size="xs"><h4>State</h4></EuiText>
+  <EuiComboBox
+    placeholder="Select a state"
+    isLoading={this.isLoading}
+    singleSelection={{ asPlainText: true }}
+    options={this.state.countryStates}
+    selectedOptions={this.state.countryStateSelected}
+    onChange={this.onCountryStateChange}
+    isClearable={false}
+  />
+  <EuiSpacer />
+  <EuiButton onClick={this.onClickButtonApplyFilter} fill>Apply filter</EuiButton>&nbsp;
+  <EuiButton onClick={this.onClickButtonDeleteFilter} >Delete filter</EuiButton>&nbsp;
+  <EuiButton onClick={this.onClickButtonClearForm} >Clear form</EuiButton>&nbsp;
+  <EuiButton onClick={this.onClickButtonToday} color="secondary">Time: today</EuiButton>
+</EuiForm>
 ```
 
 I use [Microsoft Code](https://code.visualstudio.com/) to edit code and [Google Chrome](https://www.google.com/chrome/) to debug.
