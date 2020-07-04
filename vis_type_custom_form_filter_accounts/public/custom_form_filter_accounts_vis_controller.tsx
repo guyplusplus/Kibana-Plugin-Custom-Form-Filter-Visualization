@@ -24,6 +24,7 @@ import {
   EuiFormRow,
   EuiFieldText,
   EuiSpacer,
+  EuiText,
   EuiComboBox,
 } from '@elastic/eui';
 import { useKibana } from '../../../src/plugins/kibana_react/public';
@@ -224,6 +225,7 @@ class CustomFormFilterAccountsVisComponent extends React.Component<CustomFormFil
             <EuiFieldText name="minimumBalance" onChange={e => this.onFormChange(e)} value={this.state.minimumBalance} />
           </EuiFormRow>
           <EuiSpacer />
+          <EuiText size="xs"><h4>State</h4></EuiText>
           <EuiComboBox
             placeholder="Select a state"
             isLoading={this.isLoading}
