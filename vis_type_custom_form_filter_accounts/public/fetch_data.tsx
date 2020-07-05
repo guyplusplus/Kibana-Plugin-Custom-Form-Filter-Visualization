@@ -80,10 +80,25 @@ export async function fetchData(core: CoreSetup, indexName, fieldName) {
     direction: 'desc',
     query,
   });
-  const filters = [];
   const create = dataPluginStart.search.searchSource.create;
   const searchSource = create(initialSearchSourceState);
   searchSource.setParent(undefined);
+  const filters = [];
+  /* a filter could be
+    {
+      meta: {
+        controlledBy: "1593926398196",
+        index: 'acf225f0-b369-11ea-8a24-979c290ba95f',
+        key: 'balance',
+      },
+      "range": {
+        "balance": {
+          "gte": 10000,
+          "lte": 20000,
+        }
+      }
+    }
+  */
   const useTimeFilter = false;
   const timefilter = null;
   searchSource.setField('filter', () => {

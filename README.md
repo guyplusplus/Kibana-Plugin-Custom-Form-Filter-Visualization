@@ -208,5 +208,6 @@ $
 - [ ] Add internationalization example
 - [ ] Create test script
 - [X] Create own plugin icon
+- [ ] Improve fetchData (actually Array) with a more reusable and paramerizable API
 
 
