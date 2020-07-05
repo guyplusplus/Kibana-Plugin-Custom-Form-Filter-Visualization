@@ -71,12 +71,12 @@ export async function fetchData(core: CoreSetup, indexName, fieldName) {
   const field = indexPattern.fields.find(({ name }) => name === fieldName);
   const initialSearchSourceState: SearchSourceFields = {
     timeout: "1000ms",
-    terminate_after: 100000,
+    terminate_after: 100000, //from elastic_search, per shard
   };
   const query = null;
   const aggs = termsAgg({
     field: indexPattern.fields.getByName("state.keyword"),
-    size: 100, //null means 10 as default bucket size
+    size: 100, //if set to null, returns only top 10 states
     direction: 'desc',
     query,
   });
@@ -108,7 +108,7 @@ export async function fetchData(core: CoreSetup, indexName, fieldName) {
     // If the fetch was aborted then no need to surface this error in the UI
     if (error.name === 'AbortError')
       return;
-    this.disable('Unable to fetch terms, error: {error.message}'); //TODO
+    //this.disable('Unable to fetch terms, error: {error.message}'); //TODO
     return;
   }
   const selectOptions = _.get(resp, 'aggregations.termsAgg.buckets', []).map((bucket: any) => {
@@ -116,7 +116,7 @@ export async function fetchData(core: CoreSetup, indexName, fieldName) {
   });
 
   if (selectOptions.length === 0) {
-    this.disable('No value to display'); //TODO noValuesDisableMsg(fieldName, indexPattern.title));
+    //this.disable('No value to display'); //TODO noValuesDisableMsg(fieldName, indexPattern.title));
     return;
   }
 
