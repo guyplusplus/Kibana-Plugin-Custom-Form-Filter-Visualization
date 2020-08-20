@@ -3,5 +3,5 @@
   "version": "kibana",
   "ui": true,
   "server": true,
-  "requiredPlugins": ["expressions", "visualizations", "data"]
+  "requiredPlugins": ["kibanaReact", "kibanaUtils", "expressions", "visualizations", "data"]
 }

@@ -81,7 +81,7 @@ export async function fetchData(core: CoreSetup, indexName, fieldName) {
     query,
   });
   const create = dataPluginStart.search.searchSource.create;
-  const searchSource = create(initialSearchSourceState);
+  const searchSource = await create(initialSearchSourceState || {});
   searchSource.setParent(undefined);
   const filters = [];
   /* a filter could be
