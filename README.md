@@ -39,30 +39,29 @@ $ sudo apt install elasticsearch
 $ sudo apt install kibana
 ```
 
-For testing purpose, it may be required to install a specific (not latest) version of kibana or ElasticSearch.
+For testing purpose, it may be required to install a specific (not latest) version of Kibana or ElasticSearch.
 
 ```shell
-$ sudo apt remove kibana    [for latest version]
-$ sudo apt install kibana=7.8.0    [for a specific version]
+$ sudo apt install kibana    [for latest version]
+$ sudo apt install kibana=7.8.0    [OR for a specific version]
 ```
 
-3. Adjust listening IP address of kibana if network access is required
+3. Adjust listening IP address of Kibana if network access is required
 
 ```shell
 $ sudo vi /etc/kibana/kibana.yml
   server.host: "192.168.1.77"    [update with correct IP value]
 ```
 
-4. Start ElasticSearch, possibly upload the accounts test data, then start Kibana. Then open browser http://192.168.1.77:5601    [update with correct IP value]
+4. Start ElasticSearch, possibly upload the accounts test data
 
 ```shell
 $ sudo systemctl start elasticsearch
 $ curl -X GET "localhost:9200"
 $ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json    [optional]
-$ sudo systemctl start kibana
 ```
 
-5. Now to create a development environment, download nvm, git client and yarn
+5. Now to create a Kibana development environment, download nvm, git client and yarn
 
 ```shell
 $ curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash    [then open a new terminal]
@@ -74,7 +73,7 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-6. Download Kibana source code. . After download, `kibana` is the top directory. Then select the target version by selecting a tag or a branch (v7.6.2, v7.8.0, v7.8, etc.)
+6. Download Kibana source code. After download, `kibana` is the top directory. Then select the target version by selecting a tag or a branch (v7.6.2, v7.8.0, v7.8, etc.)
 
 ```shell
 $ git clone https://github.com/elastic/kibana.git
@@ -82,9 +81,9 @@ $ cd kibana
 $ git checkout v7.8.0
 ```
 
-7. Copy the source code with modified name inside the `kibana/plugins` directory
+7. Copy the source code of this plugin with modified name inside the `kibana/plugins` directory
 
-8. Start Kibana in development mode, ensuring only OSS (Open Source Software) features are used
+8. Start Kibana in development mode, ensuring only OSS (Open Source Software) features are used. This step may take few minutes for the first compilation
 
 ```shell
 $ cd kibana
@@ -106,7 +105,7 @@ $ sudo sysctl -p
 elasticsearch.ignoreVersionMismatch: true
 ```
 
-11. When it is time to upgrade the kibana development environment, start for a clean environment, get the latest changes from github, and switch to the new tag or release. The `kibana/plugins` directory remains untouched accross these steps. You may delete the `target` folder in each plugin folder.
+11. When it is time to upgrade the Kibana development environment, start for a clean environment, get the latest changes from github, and switch to the new tag or release. The `kibana/plugins` directory remains untouched accross these steps. You may delete the `target` folder in each plugin folder.
 
 ```shell
 $ cd kibana
