@@ -2,6 +2,6 @@
   "id": "visTypeCustomFormFilterAccounts",
   "version": "kibana",
   "ui": true,
-  "server": true,
+  "server": false,
   "requiredPlugins": ["kibanaReact", "kibanaUtils", "expressions", "visualizations", "data"]
 }
