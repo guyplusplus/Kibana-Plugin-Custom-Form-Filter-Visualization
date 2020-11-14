@@ -155,27 +155,20 @@ I use [Microsoft Code](https://code.visualstudio.com/) to edit code and [Google 
 
 ## Packaging the plugin as a zip file
 
-Few key points to be aware:
-* Simply add the plugin directory inside a `kibana` folder and zip the file. Perform this zip operation on Linux ; on Windows it leads to wired error when installing the plugin `"Plugin installation was unsuccessful due to error "EACCES: permission denied, open '/usr/share/kibana/plugins/.plugin.installing/package.json'""`.
-* By (my) convension, zip filename format carries the Kibana version (i.e. 7.8.0) followed by the plugin version (i.e. 1.0.0)
-* Set the Kibana version and the plugin version by updating the file `kbn_tp_custom_form_filter_accounts/package.json`, respectively the value of the keys `kibana.version` and `version`
-* Include the `vis_type_custom_form_filter_accounts/target` directory which comes for the devevelopment environment in the zip file
-
-The zip structure is:
+Build the zip file with the `plugin_helpers.js` script
 
 ```
-vis_type_custom_form_filter_accounts_7.8.0_1.0.0.zip
-  kibana/
-    vis_type_custom_form_filter_accounts/
-      config.js
-      kibana.json
-      package.json
-      public/
-        ...
-      server/
-        ...
-      target/
-        ...
+$ cd kibana/plugins/vis_type_custom_form_filter_accounts
+$ node ../../scripts/plugin_helpers.js build
+? What version of Kibana are you building for? 7.10.0
+ info deleting the build and target directories
+ info running @kbn/optimizer
+ │ info initialized, 0 bundles cached
+ │ info starting worker [1 bundle]
+ │ succ 1 bundles compiled successfully after 45 sec
+ info copying source into the build and converting with babel
+ info compressing plugin into [visTypeCustomFormFilterAccounts-7.10.0.zip]
+$
 ```
 
 ## Installing the plugin
@@ -192,8 +185,8 @@ Deleting then installing the plugin often fails for me. I fix it by running this
 
 ```shell
 $ cd /usr/share/kibana
-$ sudo -u kibana ./bin/kibana-plugin remove vis_type_custom_form_filter_accounts
-Removing vis_type_custom_form_filter_accounts...
+$ sudo -u kibana ./bin/kibana-plugin remove visTypeCustomFormFilterAccounts
+Removing visTypeCustomFormFilterAccounts...
 Plugin removal complete
 $ sudo rm -rf /usr/share/kibana/optimize/bundles
 $
