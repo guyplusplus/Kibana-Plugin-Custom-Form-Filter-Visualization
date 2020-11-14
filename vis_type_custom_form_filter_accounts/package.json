@@ -1,9 +1,11 @@
 {
   "name": "vis_type_custom_form_filter_accounts",
-  "version": "1.0.2",
-  "kibana": {
-    "version": "kibana",
-    "templateVersion": "1.0.0"
-  },
-  "license": "Apache-2.0"
+  "version": "1.0.3",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "yarn plugin-helpers build",
+    "plugin-helpers": "node ../../scripts/plugin_helpers",
+    "kbn": "node ../../scripts/kbn"
+  }
 }
