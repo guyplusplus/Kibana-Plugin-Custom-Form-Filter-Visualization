@@ -87,7 +87,7 @@ $ git checkout v7.8.0
 
 ```shell
 $ cd kibana
-$ nvm use 10.21.0    [or expected version]
+$ nvm use 10.21.0    [or expected version. nvm install n.n.n may be required if version is missing]
 $ yarn kbn bootstrap
 $ yarn start --oss
 ```
