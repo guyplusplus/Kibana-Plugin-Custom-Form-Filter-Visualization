@@ -10,6 +10,8 @@ This repository is for Kibana **v7.8 (up) plugin New Platform (NP)** while [this
 
 This plugin is adapted from the [vis_type_markdown](https://github.com/elastic/kibana/tree/7.8/src/plugins/vis_type_markdown) plugin.
 
+**WARNING: this plugin does not work for Kibana 7.13 up. I am not maintaining the code for the moment. Plugin structure and APIs are constantly evolving (changing) and documentation is scarce.**
+
 ## Sample Screenshots
 
 Few screen shots which makes it very easy to understand.
